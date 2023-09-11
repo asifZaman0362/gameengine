@@ -2,6 +2,7 @@
 #define GAME_SHADER_HPP
 #include <utility>
 #include <vector>
+#include "header.hpp"
 
 namespace zifmann::game::core {
     namespace shader {
