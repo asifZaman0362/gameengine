@@ -1,0 +1,38 @@
+[CMake]
+Build Directory Count=1
+Current Build Directory Index-Host System=0
+
+[CMake][CMake Build Directory 0]
+Build Directory Path=/home/asif/src/gameengine/build
+Build Type=
+CMake Binary=/run/current-system/sw/bin/cmake
+CMake Executable=/run/current-system/sw/bin/cmake
+Environment Profile=
+Extra Arguments=
+Install Directory=/var/empty/local
+Runtime=Host System
+
+[Launch]
+Launch Configurations=Launch Configuration 0
+
+[Launch][Launch Configuration 0]
+Configured Launch Modes=execute
+Configured Launchers=nativeAppLauncher
+Name=gameengine
+Type=Native Application
+
+[Launch][Launch Configuration 0][Data]
+Arguments=
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x02\x00\x00\x00\x14\x00g\x00a\x00m\x00e\x00e\x00n\x00g\x00i\x00n\x00e\x00\x00\x00\x14\x00g\x00a\x00m\x00e\x00e\x00n\x00g\x00i\x00n\x00e)
+Dependency Action=Build
+EnvironmentGroup=
+Executable=file:///home/asif/src/gameengine
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+Kill Before Executing Again=4194304
+Project Target=gameengine,gameengine
+Use External Terminal=false
+Working Directory=
+isExecutable=false
+
+[Project]
+VersionControlSupport=kdevgit

@@ -13,7 +13,9 @@ else()
     find_package(GLFW 3.4)
 endif()
 
-add_executable(${CMAKE_PROJECT_NAME} external/glad/src/glad.c src/main.cc src/window.cc)
+find_package(glm)
+
+add_executable(${CMAKE_PROJECT_NAME} external/glad/src/glad.c src/main.cc src/window.cc src/mesh.cc src/shader.cc)
 
 if (LINUX)
     target_link_libraries(${CMAKE_PROJECT_NAME} GL glfw)
