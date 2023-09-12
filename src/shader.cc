@@ -46,6 +46,7 @@ std::pair<bool, ProgramID> load_shader_program(
     it = std::istreambuf_iterator{fragment_shader_source_file};
     end = std::istreambuf_iterator<char>{};
     buffer = std::string(it, end);
+    logger::log_debug("frag: %s", buffer.c_str());
     len = fragment_shader_source_file.tellg();
     ShaderID fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
     if (!fragment_shader) {

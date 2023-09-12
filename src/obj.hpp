@@ -15,7 +15,7 @@ namespace zifmann::game::utility {
 namespace obj_loader {
 struct ObjData {
     std::vector<core::Vertex> verts;
-    std::vector<int> indices;
+    std::vector<unsigned int> indices;
 };
 
 inline std::pair<bool, ObjData> load_obj_file(const char* filename) {
@@ -28,7 +28,7 @@ inline std::pair<bool, ObjData> load_obj_file(const char* filename) {
     std::vector<vec2> uvs;
     std::vector<vec3> verts;
     std::vector<vec3> normals;
-    std::vector<int> indices;
+    std::vector<unsigned int> indices;
     std::vector<glm::vec<3, glm::vec<3, int>>> triangles;
     std::vector<glm::vec<3, int>> vertex_entries;
     std::vector<core::Vertex> vertex_data;

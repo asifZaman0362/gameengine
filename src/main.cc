@@ -1,3 +1,4 @@
+#include "transform.hpp"
 #include "window.hpp"
 #ifdef linux
 #define GLFW_INCLUDE_NONE
@@ -33,6 +34,7 @@ void load_data() {
         exit_game(1);
     }
     shader_prog = res.second;
+    log_debug("prog: %d", shader_prog);
     if (!mesh_data.first) {
         log_error("couldnt load obj file!");
         exit_game(1);
@@ -63,14 +65,22 @@ int main() {
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glfwSetKeyCallback(window, key_callback_handler);
     load_data();
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    Transform transform;
+    mat4 matrix = mat4(1);
     while (running) {
         glfwPollEvents();
         glClearColor(1.0f, 0.8f, 0.4f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUseProgram(shader_prog);
-        glBindVertexArray(mesh.vao);
-        glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
+        glBindVertexArray(mesh.vao);
+        transform.rotation_angles.y += 0.1f;
+        transform.rotation_angles.z += 0.1f;
+        auto loc = glGetUniformLocation(shader_prog, "model");
+        glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(get_model_matrix(transform)));
+        glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
     }
     close_window(window);
