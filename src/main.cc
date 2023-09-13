@@ -10,6 +10,7 @@
 #include "mesh.hpp"
 #include "obj.hpp"
 #include "shader.hpp"
+#include "texture.hpp"
 
 using namespace zifmann::logger;
 using namespace zifmann::game::core;
@@ -20,6 +21,10 @@ using Window = GLFWwindow*;
 bool running = true;
 Mesh mesh;
 shader::ProgramID shader_prog;
+
+glm::vec3 light_position = glm::vec3(1, 1, 1);
+glm::vec3 ambient_light = glm::vec3(0.1f, 0.1f, 0.1f);
+glm::vec3 camera_position = glm::vec3(0, 0, -1);
 
 void exit_game(int code) {
     glfwTerminate();
@@ -68,7 +73,8 @@ int main() {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     Transform transform;
-    mat4 matrix = mat4(1);
+    unsigned int texture_id = texture::load_image("tex.png");
+    transform.translation = { 0, 0, -1 };
     while (running) {
         glfwPollEvents();
         glClearColor(1.0f, 0.8f, 0.4f, 1.0f);
@@ -76,10 +82,15 @@ int main() {
         glUseProgram(shader_prog);
         glBindVertexArray(0);
         glBindVertexArray(mesh.vao);
-        transform.rotation_angles.y += 0.1f;
-        transform.rotation_angles.z += 0.1f;
-        auto loc = glGetUniformLocation(shader_prog, "model");
-        glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(get_model_matrix(transform)));
+        transform.rotation_angles.y += 0.01f;
+        transform.rotation_angles.z += 0.01f;
+        shader::set_shader_uniform_matrix(shader_prog, "model", get_model_matrix(transform));
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture_id);
+        shader::set_shader_uniform<1, int>(shader_prog, "diffuse_texture", glm::vec<1, int>(0));
+        shader::set_shader_uniform<3, float>(shader_prog, "light_position", light_position);
+        shader::set_shader_uniform<3, float>(shader_prog, "camera_position", camera_position);
+        shader::set_shader_uniform<3, float>(shader_prog, "ambient_light", ambient_light);
         glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
     }

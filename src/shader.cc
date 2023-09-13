@@ -89,5 +89,39 @@ std::pair<bool, ProgramID> load_shader_program(
 }
 
 void unload_shader_program(ProgramID program) { glDeleteProgram(program); }
+
+template<>
+void set_shader_uniform<1, int>(ShaderID shader, const char* name, const glm::vec<1, int>& val) {
+    auto location = glGetUniformLocation(shader, name);
+    glUniform1i(location, val.x);
+}
+template<>
+void set_shader_uniform<1, float>(ShaderID shader, const char* name, const glm::vec<1, float>& val) {
+    auto location = glGetUniformLocation(shader, name);
+    glUniform1f(location, val.x);
+}
+
+template<>
+void set_shader_uniform<2, float>(ShaderID shader, const char* name, const glm::vec<2, float>& val) {
+    auto location = glGetUniformLocation(shader, name);
+    glUniform2f(location, val.x, val.y);
+}
+
+template<>
+void set_shader_uniform<3, float>(ShaderID shader, const char* name, const glm::vec<3, float>& val) {
+    auto location = glGetUniformLocation(shader, name);
+    glUniform3f(location, val.x, val.y, val.z);
+}
+
+template<>
+void set_shader_uniform<4, float>(ShaderID shader, const char* name, const glm::vec<4, float>& val) {
+    auto location = glGetUniformLocation(shader, name);
+    glUniform4f(location, val.x, val.y, val.z, val.w);
+}
+
+void set_shader_uniform_matrix(ShaderID shader, const char* name, const glm::mat4& val) {
+    auto location = glGetUniformLocation(shader, name);
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(val));
+}
 }  // namespace shader
 }  // namespace zifmann::game::core

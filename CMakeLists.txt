@@ -15,7 +15,7 @@ endif()
 
 find_package(glm)
 
-add_executable(${CMAKE_PROJECT_NAME} external/glad/src/glad.c src/main.cc src/window.cc src/mesh.cc src/shader.cc)
+add_executable(${CMAKE_PROJECT_NAME} external/glad/src/glad.c src/main.cc src/window.cc src/mesh.cc src/shader.cc src/texture.cc)
 
 if (LINUX)
     target_link_libraries(${CMAKE_PROJECT_NAME} GL glfw)
